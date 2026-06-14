@@ -9,7 +9,6 @@ jobs:
 test-build-push:
 runs-on: ubuntu-latest
 
-```
 steps:
 - name: Checkout Code
   uses: actions/checkout@v4
@@ -43,5 +42,4 @@ steps:
 
 - name: Success Message
   run: echo "Build and Push Successful"
-```
 
