@@ -1,45 +1,41 @@
 name: Advanced CI/CD Pipeline
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
 
 jobs:
-test-build-push:
-runs-on: ubuntu-latest
+  test-build-push:
+    runs-on: ubuntu-latest
 
-steps:
-- name: Checkout Code
-  uses: actions/checkout@v4
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-- name: Set up Python
-  uses: actions/setup-python@v5
-  with:
-    python-version: "3.11"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-- name: Install Dependencies
-  run: |
-    pip install -r requirements.txt
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
 
-- name: Check Python Syntax
-  run: |
-    python -m py_compile app.py
+      - name: Check Python Syntax
+        run: python -m py_compile app.py
 
-- name: Login to Docker Hub
-  uses: docker/login-action@v3
-  with:
-    username: ${{ secrets.DOCKER_USERNAME }}
-    password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-- name: Build Docker Image
-  run: |
-    docker build -t ${{ secrets.DOCKER_USERNAME }}/finance-app:latest .
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/finance-app:latest .
 
-- name: Push Docker Image
-  run: |
-    docker push ${{ secrets.DOCKER_USERNAME }}/finance-app:latest
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/finance-app:latest
 
-- name: Success Message
-  run: echo "Build and Push Successful"
+      - name: Success Message
+        run: echo "Build and Push Successful"
 
