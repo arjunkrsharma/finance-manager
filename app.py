@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 app.secret_key = "mysecretkey"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///finance.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://finance_user:finance_pass@postgres:5432/finance_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
